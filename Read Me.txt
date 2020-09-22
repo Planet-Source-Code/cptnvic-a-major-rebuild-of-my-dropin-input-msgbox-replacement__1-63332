@@ -1,0 +1,290 @@
+A few notes from CptnVic:
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+In this document:
+	* Improvements In This Build
+	* Thanks to jeremyxtz for aggravating me!
+	* Thanks to Morgan Haueisen for the idea
+	* Minimum Requirements
+	* Copyright stuff for this project
+	* Using the code in your project
+	* Custom Icons... extracting and painting on the form
+	* Changing color themes in this project
+	* Tweaking appearance/functionality
+	* Relative Positioning of the Message/Input boxes
+	* Known bugs
+	* ToDo
+	* Option explicit... save your emails!
+
+---[ Improvements In This Build ]-------------------------------------------
+	* Drastic reduction in code/frx weight with improved speed/results
+	* Now only one control on form... if I were smart enough... I'd get rid of it!
+	* Much improved gradient code and added gradient option for prompt area
+	* Added owner drawn icons w/o using picture boxes, etc.
+	* Improved form location code
+	* Added multiple-line title bars
+	* Added word wrap code for title bars and prompt text areas (using same code)
+	* Added a NagScreen option for which I may later be sorry!
+	* Now Only A Single function to call to produce all variations!
+
+The sort of cool thing about this build is the ability to play around with the results
+of the function call... setting some flags... As far as I can tell, the worst thing 
+that happens from experimenting with the function is a poor looking message box...
+BUT it's fun trying!
+
+---[ Thanks to jeremyxtz for aggravating me! ]------------------------------
+
+The first comment I received on my previous post was from jeremyxtz.  It was
+civil enough but was also a BRUTALLY HONEST assessment of the code.  Some of what
+he had to say was:
+
+Looks pretty.  (After reading THAT - I KNEW more was coming!)
+Test with large/enlarged fonts - don't assume everyone has small fonts...
+Also its a LOT heavier than it needs to be.
+You're using a lot of bitmaps/images which you could easily create in code...
+
+Until this post, I was fairly happy with my submission.  But I did not sleep well
+that night... pondering how exactly I could deal with his assessment... for I do
+not like to be such a poor example to those new to coding.
+
+Therefore, I set out to improve the previous submission and ended up rebuilding
+almost the entire project.  However, thanks to jeremyxtz, the proof is in the
+pudding:
+
+Previous .FRM: 64KB   	Previous .FRX: 160KB
+     New .FRM: 49KB	     New .FRX:   3KB...just because of the hand cursor!
+	       ----		       -----
+Savings:       15KB                    157KB
+
+That is amazing... even to me.  What is even more amazing to me is that this version
+does everything the previous version did AND MORE just better, faster, and prettier!
+
+The point of all of this is that your comments really can make a difference!  I think
+I have addressed most of his concerns... So thanks jeremyxtz!
+
+---[ Thanks to Morgan Haueisen for the idea! ]------------------------------
+
+I got the idea for this project by looking at the code written in 2004(?)
+by Morgan Haueisen.  He has retained copyright and his project displays his
+copyright notice.
+
+You can see his code at: 
+http://www.Planet-Source-Code.com/vb/scripts/ShowCode.asp?txtCodeId=48289&lngWId=1
+
+I highly recommend looking at his excellent code.  It is obvious to me that 
+he does not "knock back a few beers" while he is writing code.
+
+A comparison of our 2 projects will quickly reveal that the only similarity
+is our mutual dislike of windows/vb message and input boxes and a few very
+common api calls.
+
+His project tries to faithfully replicate the standard msgbox in terms of
+function... but with an updated appearance.  It is excellent code.  Although
+his code does a check to use XP themes... sadly we non-XP users get the
+crappy standard command buttons.  (And I was not too nuts about his gradient.)
+
+Therefore, I set out to accomplish most of what he accomplished with a few
+fairly major differences:
+
+He associates sounds with the message boxes
+... I'm not nuts about having some noise assault me on every occasion.
+... I have included the api to play sounds... but made them optional.
+... Although using sound is sometimes beneficial, the first time the api call
+... to play the sound is made (whether by the standard msgbox or mine) the
+... api has to be loaded.  It is not loaded until called.  If you don't need
+... sounds... this will speed up the form load.
+
+He uses standard VB command buttons
+... I hate the way they look.  So, I draw the buttons needed and redraw the
+... button text to provide a rollover effect.  
+... The buttons I paint are centered and/or spaced on the form to provide
+... a slightly neater appearance.
+
+Anyway, I am in no way ragging on his work.  It is, as I've said, excellent
+code.  I just wanted a more up-to-date look and to arrive at the same result.
+Thanks Morgan!
+
+BTW... there may be more similar projects on PSC... I dunno... haven't seen
+them if they exist
+
+Another BTW... now that I think about it... Morgan may be a she... if so...
+SORRY Morgan for the "He" thing!
+------------------------------------------------------------------------------
+
+---[ Minimum Requirements ]---------------------------------------------------
+
+Hardly any.  If you compiled the test project, you shouldn't even have to 
+install it on any computer that had:
+	NT 3.1 or higher
+	Windows 95 or higher
+(and that's just because of the api)
+
+Backwards compatibility:
+Should be compatible (but only tested in VB6) with
+	VB 4-32bit
+	VB 5
+	VB 6
+so there!
+
+I have not had time to test this project on XP... but see no reason why it
+wouldn't work just fine.  Let me know if it does not play well with XP or
+other OS.
+-----------------------------------------------------------------------------
+
+---[ Copyright stuff for this project ]---------------------------------------
+
+Look at the code!  Everything in this project is as harmless as I know how to
+make it.  However, you may only use this code if you agree to hold harmless
+the author of this code.
+
+Otherwise, I don't give a rats as... er... care how you use it.  You can use it,
+throw it away, sell it, compile it, re-decompile it... or do what ever you 
+want... just don't blame me for what ever you do.  And don't claim that you 
+authored the code or own the code.
+
+For our purposes, I retain ownership of the code and may use it as I wish.  I
+grant you the right to use the code as you see fit as long as your use does
+not infringe on my rights as the owner/author of this code.
+
+Is that clear enough?  If not... DON'T use the code.
+
+Sure, some credit would be nice... but the truth is that I learn more from
+examining PSC user's code than PSC users EVER will examining mine... so think 
+of this as a repayment of sorts for your much better and more sophisticated work.
+------------------------------------------------------------------------------
+
+---[ Using the code in your project ]-----------------------------------------
+
+The primary reason I was attracted to Haueisen's code was the simplicity of
+implementation.  All you have to do to implement my code in your project is:
+
+1)  Add the form files: frmMsgBox.frm and frmMsgBox.frx
+    To your project.  There are no *.bas files or other to add.
+
+2)  Call the function that shows the message/input boxes (really, a form).
+    It is:
+
+    frmMsgBox.ShowMsgBox(MsgTitle As String, MsgPrompt As String, [Optional MsgMode,...]
+    Don't forget to reference the form.  That's all there is to it!
+
+	What you get is a completely customizable message box or input box
+	depending on the parameters you pass to the function.
+
+	Function returns a string which:
+		For Message boxes: Represents the button clicked
+		(See more below)
+
+		For Input boxes: Represents the text in the text box.
+
+    There are 4 possible buttons... on the bottom (3) and a close button on top.
+    All, some, or none may be displayed depending on your function call parameters.
+    In any event they are always handled as:
+	Bottom buttons:
+		Left: Considered to be the OK button (msgbox returns "0")
+		Middle: Considered to be the CANCEL button (msgbox returns "1")
+		Right: Considered to be the RETRY button (msgbox returns "2")
+	Top "X" Close button
+		Msgbox returns "3"
+	Examine the function for more info!
+
+---------------------------------------------------------------------------------------------
+
+---[ Custom Icons... extracting and painting on the form ]-----------------------------------
+
+I often want to provide a custom icon (company logo, etc.) for use.  While the api to extract
+registered Icons is pretty straight forward, the api to extract it from the message box is not
+readily apparent to me.  Therefore, when I want to do such a thing, I simply use the properties
+window to set the icon for frmMsgBox to the desired icon, add a picture box that is invisible,
+and change the code in: Private Sub DoIconThing(IconNum As Integer)
+
+You will also need to change the case statement, but I find it easily replaces the application
+icon - which I do not find useful.  See the DoIconThing sub for more info.
+
+---[ Changing color themes in this project ]-------------------------------------------------
+
+The buttons for this project are drawn using an array of colors.  The array of
+colors is used to draw borders, gradients, etc on your form.
+
+A look at this sub will show you (for example):
+
+SColorScheme(3, 0) = 206: SColorScheme(3, 1) = 214: SColorScheme(3, 2) = 189 'olive
+
+This represents the array for the 3rd (Olive...ish) color scheme.  Since I have used white
+... RGB(255,255,255) as the top of the gradient... I need to know the "darkest" component of
+the gradient.  In this example, the darkest component resolves to:
+... RGB(206,214,189)... (although I haven't checked... I doubt if it ever gets there!)
+AND RGB(206,214,189) is used to draw the border around the message/input box AND create
+the gradients.  (* except for white!... where I default to gray.)
+
+You can create your own custom color schemes by simply changing the color arrays in the
+DoFormStuff sub.
+
+-------------------------------------------------------------------------------------------
+
+---[ Tweaking appearance/functionality ]---------------------------------------------------
+
+Other than the section above, the cool thing about this project is that it give you alot
+more control over how your message/input box apprear.
+
+Change the settings (font bold... color... etc) by passing the variables in the functions.
+
+If you want to "dock" the form somewhere:
+
+   Dock to left side: 
+	Enter a BoxLeft value < -2 (or -2000... any # < -1)
+	Disable the drag... Dragit = False
+
+   Dock to right side:
+	Enter a BoxLeft value > than any monitor in earth... ie. 5000
+	Disable the drag... Dragit = False
+
+   Dock to top:
+	Enter a BoxTop value < -2 (or -2000... any # < -1)
+	Disable the drag... Dragit = False
+
+   Dock to bottom:
+	Enter a BoxTop value > than any monitor in earth... ie. 5000
+	Disable the drag... Dragit = False
+
+For all monitors not on earth... you're on your own.
+
+I've tried to locate all of the variables I use most at the top of the list... to make it
+easier... but you can add or delete them as you like.
+
+In addition, you can change return values of the function as you see fit.
+------------------------------------------------------------------------------------------
+
+---[ Relative Positioning of the Message/Input boxes ]------------------------------------
+
+I'm not going to do this for you in this demo... but if you want, you can very easily
+change the code to provide relative positioning of your message/input box (for instance:
+relative to a mouse X,Y click) by changing the ByVal references to ByRef references, and
+passing these values to the BoxLeft and BoxTop vars.
+
+If you don't understand this... forget it... but trust me... it'll work. 
+
+---[ Known bugs ]-------------------------------------------------------------------------
+
+None that I know of... although I DID knock back a few beers during the re-size code... I
+haven't (hick-up) found any bad problems with it yet.
+
+I generally debug my code till I never get done.  However, I will admit that I have not
+tried to change every attribute of every component in this project.
+
+If you find one... fix it and/or let me know.
+------------------------------------------------------------------------------------------
+
+---[ ToDo ]-------------------------------------------------------------------------------
+
+I'm thinking... add a default somehow to some button... then kill myself...
+since life will be good for a change.
+------------------------------------------------------------------------------------------
+
+---[ Option explicit... save your emails! ]-----------------------------------------------
+
+You wouldn't turn on Option Explicit either if you knocked back a few beers while working!
+If you can't stand it... add it.  I promise... there won't be that many un-dimensioned
+variables.  Generally, I declare them if I plan to use them for more than a line or 2 of
+code.  I always try to name variables so stupidly that NO ONE in their right mind would
+have a conflict!  ANYWAY, get a grip!
+------------------------------------------------------------------------------------------
+
